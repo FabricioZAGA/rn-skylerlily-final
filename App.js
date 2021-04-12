@@ -4,9 +4,10 @@ import { StyleSheet, Text, View, Image, SafeAreaView } from 'react-native';
 import Login from './src/pages/Login.js';
 import SignUp from './src/pages/SignUp.js';
 import List from './src/pages/List.js';
+import Info from './src/pages/Info.js';
 
 export default function App() {
   return (
-    <List />
+    <Info />
   );
 }
