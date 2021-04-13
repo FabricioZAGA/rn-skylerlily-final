@@ -5,26 +5,46 @@ import colors from '../utils/colors';
 
 export default function Search() {
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ padding: 10, flexDirection: 'row', backgroundColor: colors.SECONDARY_YELLOW }}>
-        <Text style={{ padding: 5 }}>Logo</Text>
-        <TextInput style={{
-          width: "80%",
-          backgroundColor: "white",
-          placeholder: "Search",
-          placeholderTextColor: "black",
-          marginHorizontal: 10,
-          borderRadius: 7
-        }} />
-        <TouchableOpacity style={{
-          padding: 5,
-          borderRadius: 10,
-          borderColor: colors.PRIMARY_ORANGE,
-          borderWidth: 2,
-        }}>
-          <Text style={{ color: colors.PRIMARY_ORANGE, fontWeight: '500' }}>Search</Text>
+    <View style={styles.searchBar}>
+      <View style={styles.searchBarInner}>
+        <Text style={styles.logo}>Logo</Text>
+        <TextInput style={styles.searchInput} />
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  searchBar: {
+    flex: 1
+  },
+  searchBarInner: {
+    padding: 10,
+    flexDirection: 'row',
+    backgroundColor: colors.SECONDARY_YELLOW
+  },
+  logo: {
+    padding: 5
+  },
+  searchInput: {
+    width: "80%",
+    backgroundColor: "white",
+    placeholder: "Search",
+    placeholderTextColor: "black",
+    marginHorizontal: 10,
+    borderRadius: 7
+  },
+  button: {
+    padding: 5,
+    borderRadius: 10,
+    borderColor: colors.PRIMARY_ORANGE,
+    borderWidth: 2,
+  },
+  buttonText: {
+    color: colors.PRIMARY_ORANGE,
+    fontWeight: '500'
+  }
+});
