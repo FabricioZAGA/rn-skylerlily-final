@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   titleApp: {
     fontSize: 35,
     fontWeight: "bold",
-    color: "black",
+    color: "white",
     marginBottom: 100,
   },
 });
