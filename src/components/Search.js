@@ -1,7 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import colors from '../utils/colors';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
+import colors from "../utils/colors";
 
 export default function Search() {
   return (
@@ -19,23 +25,21 @@ export default function Search() {
 
 const styles = StyleSheet.create({
   searchBar: {
-    flex: 1
+    flex: 1,
   },
   searchBarInner: {
     padding: 10,
-    flexDirection: 'row',
-    backgroundColor: colors.SECONDARY_YELLOW
+    flexDirection: "row",
+    backgroundColor: colors.SECONDARY_YELLOW,
   },
   logo: {
-    padding: 5
+    padding: 5,
   },
   searchInput: {
     width: "80%",
     backgroundColor: "white",
-    placeholder: "Search",
-    placeholderTextColor: "black",
     marginHorizontal: 10,
-    borderRadius: 7
+    borderRadius: 7,
   },
   button: {
     padding: 5,
@@ -45,6 +49,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: colors.PRIMARY_ORANGE,
-    fontWeight: '500'
-  }
+    fontWeight: "500",
+  },
 });

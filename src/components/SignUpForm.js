@@ -1,72 +1,66 @@
-import React from 'react';
-import { StyleSheet, TextInput, View, Text, TouchableOpacity } from 'react-native';
-import colors from '../utils/colors';
+import React from "react";
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import colors from "../utils/colors";
 
 export default function SignUpForm() {
-
   return (
     <View style={styles.viewForm}>
       <View style={styles.viewInput}>
         <View>
-          <Text style={styles.emailText}> Email Address</Text>
+          <Text style={styles.textStyle}> Email Address</Text>
         </View>
-        <TextInput
-          placeholder="Email"
-          style={styles.input}
-        />
+        <TextInput placeholder="Email" style={styles.input} />
         <View>
-          <Text style={styles.emailText}>Password</Text>
+          <Text style={styles.textStyle}>Password</Text>
         </View>
-        <TextInput
-          placeholder="Password"
-          style={[styles.input]}
-        />
-
+        <TextInput placeholder="Password" style={[styles.input]} />
       </View>
       <TouchableOpacity style={styles.buttonLogin}>
         <Text style={styles.textLogin}>SignUp</Text>
-      </TouchableOpacity >
-
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   viewForm: {
-    position: 'absolute',
-    bottom: '40%',
-    width: '85%',
-    paddingHorizontal: '',
+    width: "85%",
     borderRadius: 5,
     height: 350,
     borderWidth: 1,
-    backgroundColor: 'white',
-    borderColor: '#d4d4d4',
+    backgroundColor: "white",
+    borderColor: "#d4d4d4",
   },
   viewInput: {
-    flexDirection: 'column',
+    flexDirection: "column",
     top: 20,
     paddingLeft: 10,
   },
   input: {
     height: 40,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderWidth: 1,
     borderColor: colors.PRIMARY_COLOR,
     borderRadius: 5,
-    borderColor: '#d4d4d4',
-    width: '95%',
+    borderColor: "#d4d4d4",
+    width: "95%",
     marginHorizontal: 5,
 
     marginBottom: 10,
-    color: '#000',
+    color: "#000",
     paddingHorizontal: 20,
   },
-  emailText: {
+  textStyle: {
     fontSize: 15,
-    fontWeight: '400',
-    color: '#000',
-    paddingBottom: 10
+    fontWeight: "400",
+    color: "#000",
+    paddingBottom: 10,
   },
   buttonStyle: {
     width: 50,
@@ -75,14 +69,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.PRIMARY_ORANGE,
     padding: 5,
     borderRadius: 10,
-    width: '30%',
+    width: "30%",
     marginLeft: 10,
-    top: 120
+    top: 120,
   },
   textLogin: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 20,
-    color: '#fff',
-    textAlign: 'center',
+    color: "#fff",
+    textAlign: "center",
   },
 });

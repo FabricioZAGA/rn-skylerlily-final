@@ -1,69 +1,82 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, Image, SafeAreaView } from 'react-native';
-import Form from '../components/LoginForm.js';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { StyleSheet, Text, View, Image, SafeAreaView } from "react-native";
+import LoginForm from "../components/LoginForm.js";
 
 export default function Login() {
   return (
     <>
-
-      <View style={styles.topBar}>
-        <Image
-          style={styles.topBarImage}
-          source={require("../assets/Princ_01.png")}
-        />
-      </View>
-
-      {/* <View style={styles.safeArea}>
-        <Text style={styles.titleApp}> Login</Text>
-      </View> */}
-
-      <View style={styles.bottomBar}>
-        <Image
-          style={styles.bottomBarImage}
-          source={require("../assets/Princ_02.png")}
-        />
-      </View>
-      <SafeAreaView style={styles.safeArea}>
-        <Form />
+      <SafeAreaView style={styles.backgroundContainer}>
+        <View style={styles.topBar}>
+          <Image
+            style={styles.topBarImage}
+            source={require("../assets/Princ_01.png")}
+          />
+        </View>
+        <View style={styles.bottomBar}>
+          <Image
+            style={styles.bottomBarImage}
+            source={require("../assets/Princ_02.png")}
+          />
+        </View>
+      </SafeAreaView>
+      <SafeAreaView style={styles.formContainer}>
+        <Text style={styles.titleApp}>Login</Text>
+        <LoginForm />
       </SafeAreaView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  backgroundContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flex: 1,
+    zIndex: -2,
+  },
+  formContainer: {
+    position: "absolute",
+    top: 50,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flex: 1,
+    alignItems: "center",
+  },
   topBar: {
     top: 0,
-    height: '50%',
-    zIndex: -1
+    height: "50%",
+    width: "100%",
+    zIndex: -1,
+    position: "absolute",
   },
   topBarImage: {
-    width: '100%',
+    width: "100%",
     height: 250,
-    position: 'absolute',
   },
   bottomBar: {
-    bottom: -300,
-    zIndex: -1
+    bottom: 0,
+    height: "50%",
+    width: "100%",
+    zIndex: -1,
+    position: "absolute",
+    flexDirection: "column",
+    justifyContent: "flex-end",
   },
   bottomBarImage: {
-    width: '100%',
-    height: 450,
-    position: 'absolute',
+    width: "100%",
+    height: "50%",
+    resizeMode: "contain",
+    marginLeft: -100,
   },
   titleApp: {
     fontSize: 35,
-    fontWeight: 'bold',
-    color: '#FFF',
-    position: 'absolute',
-    top: 0,
+    fontWeight: "bold",
+    color: "white",
+    marginBottom: 100,
   },
-
-  safeArea: {
-    top: 200,
-    alignItems: "center"
-  },
-
-
 });
-

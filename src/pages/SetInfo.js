@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, Image, SafeAreaView } from "react-native";
-import SignUpForm from "../components/SignUpForm.js";
+import SetInfoForm from "../components/SetInfoForm.js";
 
 export default function SetInfo() {
   return (
@@ -10,19 +10,19 @@ export default function SetInfo() {
         <View style={styles.topBar}>
           <Image
             style={styles.topBarImage}
-            source={require("../assets/Sign_01.png")}
+            source={require("../assets/Set_01.png")}
           />
         </View>
         <View style={styles.bottomBar}>
           <Image
             style={styles.bottomBarImage}
-            source={require("../assets/Sign_02.png")}
+            source={require("../assets/Set_02.png")}
           />
         </View>
       </SafeAreaView>
       <SafeAreaView style={styles.formContainer}>
-        <Text style={styles.titleApp}>SignUp</Text>
-        <SignUpForm />
+        <Text style={styles.titleApp}> Set Restaurant Info</Text>
+        <SetInfoForm />
       </SafeAreaView>
     </>
   );
@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: "bold",
     color: "black",
-    marginBottom: 100,
+    marginBottom: 30,
   },
 });
