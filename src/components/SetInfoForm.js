@@ -10,7 +10,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import colors from "../utils/colors";
 
-const SetInfoForm = () => {
+const SetInfoForm = ({ navigator }) => {
   return (
     <>
       <TouchableOpacity
@@ -46,7 +46,7 @@ const SetInfoForm = () => {
         </View>
         <TextInput placeholder="Location" style={[styles.input]} />
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={navigator}>
         <Text style={styles.buttonText}>Añadir Cambios</Text>
       </TouchableOpacity>
     </>

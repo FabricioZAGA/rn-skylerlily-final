@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import {
   StyleSheet,
@@ -25,18 +24,23 @@ export default function Search() {
 
 const styles = StyleSheet.create({
   searchBar: {
-    flex: 1,
+    width: "100%",
+    backgroundColor: colors.SECONDARY_YELLOW,
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    paddingHorizontal: 30,
+    paddingTop: 40,
+    paddingBottom: 10,
   },
   searchBarInner: {
-    padding: 10,
+    justifyContent: "center",
     flexDirection: "row",
-    backgroundColor: colors.SECONDARY_YELLOW,
   },
   logo: {
     padding: 5,
   },
   searchInput: {
-    width: "80%",
+    width: "70%",
     backgroundColor: "white",
     marginHorizontal: 10,
     borderRadius: 7,

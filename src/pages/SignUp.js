@@ -3,7 +3,10 @@ import React from "react";
 import { StyleSheet, Text, View, Image, SafeAreaView } from "react-native";
 import SignUpForm from "../components/SignUpForm.js";
 
-export default function SetInfo() {
+export default function SetInfo({ navigation }) {
+  var navigate = () => {
+    navigation.push("SetInfo");
+  };
   return (
     <>
       <SafeAreaView style={styles.backgroundContainer}>
@@ -22,7 +25,7 @@ export default function SetInfo() {
       </SafeAreaView>
       <SafeAreaView style={styles.formContainer}>
         <Text style={styles.titleApp}>SignUp</Text>
-        <SignUpForm />
+        <SignUpForm navigator={navigate} />
       </SafeAreaView>
     </>
   );

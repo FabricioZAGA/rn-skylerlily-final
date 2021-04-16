@@ -1,9 +1,23 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Image, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  SafeAreaView,
+  Button,
+} from "react-native";
 import LoginForm from "../components/LoginForm.js";
 
-export default function Login() {
+export default function Login({ navigation }) {
+  var navigateList = () => {
+    navigation.push("List");
+  };
+
+  var navigateSignUp = () => {
+    navigation.push("SignUp");
+  };
   return (
     <>
       <SafeAreaView style={styles.backgroundContainer}>
@@ -22,7 +36,10 @@ export default function Login() {
       </SafeAreaView>
       <SafeAreaView style={styles.formContainer}>
         <Text style={styles.titleApp}>Login</Text>
-        <LoginForm />
+        <LoginForm
+          navigateList={navigateList}
+          navigateSignUp={navigateSignUp}
+        />
       </SafeAreaView>
     </>
   );

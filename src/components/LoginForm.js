@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import colors from "../utils/colors";
 
-export default function LoginForm() {
+export default function LoginForm({ navigateList, navigateSignUp }) {
   return (
     <>
       <View style={styles.viewForm}>
@@ -21,10 +21,13 @@ export default function LoginForm() {
             <Text style={styles.textStyle}>Password</Text>
           </View>
           <TextInput placeholder="Password" style={styles.input} />
-          <TouchableOpacity style={styles.buttonLogin}>
+          <TouchableOpacity style={styles.buttonLogin} onPress={navigateList}>
             <Text style={styles.textLogin}>Login</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonSignup}>
+          <TouchableOpacity
+            style={styles.buttonSignup}
+            onPress={navigateSignUp}
+          >
             <Text style={styles.texSignup}>New arround here? Sign Up</Text>
           </TouchableOpacity>
         </View>
