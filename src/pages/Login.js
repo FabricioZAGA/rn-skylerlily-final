@@ -18,6 +18,7 @@ export default function Login({ navigation }) {
   var navigateSignUp = () => {
     navigation.push("SignUp");
   };
+
   return (
     <>
       <SafeAreaView style={styles.backgroundContainer}>

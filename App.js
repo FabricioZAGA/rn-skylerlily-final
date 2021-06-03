@@ -7,13 +7,20 @@ import SignUp from "./src/pages/SignUp.js";
 import List from "./src/pages/List.js";
 import Info from "./src/pages/Info.js";
 import SetInfo from "./src/pages/SetInfo.js";
-
+import firebase from "./src/utils/firebase";
+import "firebase/firestore";
+import "firebase/auth/";
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="List"
+          component={List}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Login"
           component={Login}
@@ -22,11 +29,6 @@ export default function App() {
         <Stack.Screen
           name="SignUp"
           component={SignUp}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="List"
-          component={List}
           options={{ headerShown: false }}
         />
         <Stack.Screen

@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { SafeAreaView, ScrollView, LogBox } from "react-native";
 
 import Search from "../components/Search.js";
 import Card from "../components/Card.js";
-
+import firebase from "../utils/firebase";
+LogBox.ignoreLogs(["Setting a timer"]);
 const cardsInfo = [
   {
     image: `https://picsum.photos/id/302/200/200`,
@@ -57,32 +58,43 @@ const cardsInfo = [
   // {image : ``, title : ``, description : ``, likes : ``},
 ];
 export default function Login({ navigation }) {
+  const [cardsList, setCardsList] = useState(cardsInfo);
+
   var navigate = () => {
     navigation.push("Info");
   };
 
-  var renderCards = () => {
-    var cardsList = [];
-    cardsInfo.map((info, key) => {
-      cardsList.push(
+  const getItems = async () => {
+    var _cardsList = [];
+    var snapshot = firebase.firestore().collection("locales");
+    const data = (await snapshot.get()).docChanges();
+    data.map((item, key) => {
+      let aux = item.doc.data();
+
+      _cardsList.push(
         <Card
           key={key}
-          image={info.image}
-          title={info.title}
-          description={info.description}
-          likes={info.likes}
+          image={aux.image}
+          title={aux.title}
+          description={aux.description}
+          likes={aux.likes}
           navigator={navigate}
         />
       );
     });
-    return cardsList;
+    setCardsList(_cardsList);
   };
+
+  //Call when component is rendered
+  useEffect(() => {
+    getItems();
+  }, []);
 
   return (
     <ScrollView>
       <SafeAreaView>
         <Search />
-        {renderCards()}
+        {cardsList}
       </SafeAreaView>
     </ScrollView>
   );

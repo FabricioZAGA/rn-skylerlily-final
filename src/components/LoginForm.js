@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -7,8 +7,44 @@ import {
   TouchableOpacity,
 } from "react-native";
 import colors from "../utils/colors";
+import { validateEmail } from "../utils/validation";
+import firebase from "../utils/firebase";
 
 export default function LoginForm({ navigateList, navigateSignUp }) {
+  const [formData, setFormData] = useState(defaultValue);
+  const [formError, setFormError] = useState({});
+
+  const login = () => {
+    let error = {};
+    console.log("LOGIN IN");
+    if (!formData.email || !formData.password) {
+      if (!formData.email) error.email = true;
+      if (!formData.password) error.password = true;
+    } else if (!validateEmail(formData.email)) {
+      error.email = true;
+    } else if (formData.password.length < 6) {
+      error.password = true;
+    } else {
+      console.log("OK");
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(formData.email, formData.password)
+        .then((res) => {
+          console.log(res);
+          navigateList();
+        })
+        .catch((err) => {
+          console.log(err);
+          setFormError({
+            email: true,
+            password: true,
+          });
+        });
+    }
+    console.log(error);
+    setFormError(error);
+  };
+
   return (
     <>
       <View style={styles.viewForm}>
@@ -16,12 +52,25 @@ export default function LoginForm({ navigateList, navigateSignUp }) {
           <View>
             <Text style={styles.textStyle}> Email Address</Text>
           </View>
-          <TextInput placeholder="Email" style={styles.input} />
+          <TextInput
+            placeholder="Email"
+            style={[styles.input, formError.email && styles.errorInput]}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.nativeEvent.text })
+            }
+          />
           <View>
             <Text style={styles.textStyle}>Password</Text>
           </View>
-          <TextInput placeholder="Password" style={styles.input} />
-          <TouchableOpacity style={styles.buttonLogin} onPress={navigateList}>
+          <TextInput
+            placeholder="Password"
+            style={[styles.input, formError.password && styles.errorInput]}
+            secureTextEntry={true}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.nativeEvent.text })
+            }
+          />
+          <TouchableOpacity style={styles.buttonLogin} onPress={login}>
             <Text style={styles.textLogin}>Login</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -98,4 +147,14 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
   },
+  errorInput: {
+    borderColor: "#940c0c",
+  },
 });
+
+function defaultValue() {
+  return {
+    email: {},
+    password: {},
+  };
+}

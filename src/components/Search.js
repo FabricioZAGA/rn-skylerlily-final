@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  Image,
 } from "react-native";
 import colors from "../utils/colors";
 
@@ -12,7 +13,10 @@ export default function Search() {
   return (
     <View style={styles.searchBar}>
       <View style={styles.searchBarInner}>
-        <Text style={styles.logo}>Logo</Text>
+        <Image
+          style={styles.image}
+          source={require("../assets/akitamoslogo.png")}
+        />
         <TextInput style={styles.searchInput} />
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Search</Text>
@@ -54,5 +58,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: colors.PRIMARY_ORANGE,
     fontWeight: "500",
+  },
+  image: {
+    width: 30,
+    height: 30,
   },
 });

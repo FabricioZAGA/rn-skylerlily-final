@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -7,21 +7,70 @@ import {
   TouchableOpacity,
 } from "react-native";
 import colors from "../utils/colors";
+import { validateEmail } from "../utils/validation";
+import firebase from "../utils/firebase";
 
-export default function SignUpForm({ navigator }) {
+export default function SignUpForm({ navigation }) {
+  const [formData, setFormData] = useState(defaultValue);
+  const [formError, setFormError] = useState({});
+
+  const register = () => {
+    console.log("registrando...");
+    let error = {};
+
+    if (!formData.email || !formData.password) {
+      if (!formData.email) error.email = true;
+      if (!formData.password) error.password = true;
+    } else if (!validateEmail(formData.email)) {
+      error.email = true;
+    } else if (formData.password.length < 6) {
+      error.password = true;
+    } else {
+      console.log(formData);
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(formData.email, formData.password)
+        .then(() => {
+          console.log("cuenta creada");
+          //navigation.push("SetInfo");
+          navigation.push("Login");
+        })
+        .catch(() => {
+          setFormError({
+            email: true,
+            password: true,
+          });
+        });
+    }
+    setFormError(error);
+  };
+
   return (
     <View style={styles.viewForm}>
       <View style={styles.viewInput}>
         <View>
           <Text style={styles.textStyle}> Email Address</Text>
         </View>
-        <TextInput placeholder="Email" style={styles.input} />
+        <TextInput
+          placeholder="Email"
+          style={[styles.input, formError.email && styles.errorInput]}
+          onChange={(e) =>
+            setFormData({ ...formData, email: e.nativeEvent.text })
+          }
+        />
         <View>
           <Text style={styles.textStyle}>Password</Text>
         </View>
-        <TextInput placeholder="Password" style={[styles.input]} />
+        <TextInput
+          placeholder="Password"
+          style={[styles.input, formError.password && styles.errorInput]}
+          secureTextEntry={true}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.nativeEvent.text })
+          }
+        />
       </View>
-      <TouchableOpacity style={styles.buttonLogin} onPress={navigator}>
+      <TouchableOpacity style={styles.buttonLogin} onPress={register}>
         <Text style={styles.textLogin}>SignUp</Text>
       </TouchableOpacity>
     </View>
@@ -79,4 +128,14 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
   },
+  errorInput: {
+    borderColor: "#940c0c",
+  },
 });
+
+function defaultValue() {
+  return {
+    email: {},
+    password: {},
+  };
+}
