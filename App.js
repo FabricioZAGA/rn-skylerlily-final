@@ -10,6 +10,7 @@ import SetInfo from "./src/pages/SetInfo.js";
 import firebase from "./src/utils/firebase";
 import "firebase/firestore";
 import "firebase/auth/";
+import "firebase/storage";
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -27,6 +28,12 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name="SetInfo"
+          component={SetInfo}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
           name="SignUp"
           component={SignUp}
           options={{ headerShown: false }}
@@ -34,11 +41,6 @@ export default function App() {
         <Stack.Screen
           name="Info"
           component={Info}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SetInfo"
-          component={SetInfo}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

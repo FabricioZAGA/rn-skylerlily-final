@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,8 +9,66 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import colors from "../utils/colors";
-
+import * as ImagePicker from "expo-image-picker";
+import "firebase/storage";
+import firebase from "../utils/firebase";
 const SetInfoForm = ({ navigator }) => {
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [transferred, setTransferred] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const uploadImage = async () => {
+    const uri = image;
+    const filename = uri.substring(uri.lastIndexOf("/") + 1);
+    const uploadUri = Platform.OS === "ios" ? uri.replace("file://", "") : uri;
+    setUploading(true);
+    setTransferred(0);
+    const task = storage().ref(filename).putFile(uploadUri);
+    // set progress state
+    task.on("state_changed", (snapshot) => {
+      setTransferred(
+        Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+      );
+    });
+    try {
+      await task;
+    } catch (e) {
+      console.error(e);
+    }
+    setUploading(false);
+    Alert.alert(
+      "Photo uploaded!",
+      "Your photo has been uploaded to Firebase Cloud Storage!"
+    );
+  };
+
   return (
     <>
       <TouchableOpacity
@@ -22,15 +80,18 @@ const SetInfoForm = ({ navigator }) => {
           alignItems: "center",
           justifyContent: "center",
         }}
+        onPress={pickImage}
       >
-        {/* <Image
-          style={{ width: 50, height: 50 }}
-          source={{
-            uri:
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Icons8_flat_add_image.svg/1024px-Icons8_flat_add_image.svg.png",
-          }}
-        /> */}
-        <MaterialIcons name="add-photo-alternate" size={60} color="white" />
+        {image ? (
+          <Image
+            style={{ width: "100%", height: "100%", borderRadius: 10 }}
+            source={{
+              uri: image,
+            }}
+          />
+        ) : (
+          <MaterialIcons name="add-photo-alternate" size={60} color="white" />
+        )}
       </TouchableOpacity>
       <View style={{ width: "95%", marginTop: 30 }}>
         <View>
@@ -46,7 +107,7 @@ const SetInfoForm = ({ navigator }) => {
         </View>
         <TextInput placeholder="Location" style={[styles.input]} />
       </View>
-      <TouchableOpacity style={styles.button} onPress={navigator}>
+      <TouchableOpacity style={styles.button} onPress={uploadImage}>
         <Text style={styles.buttonText}>Añadir Cambios</Text>
       </TouchableOpacity>
     </>

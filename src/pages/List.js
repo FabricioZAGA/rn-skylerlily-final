@@ -58,7 +58,7 @@ const cardsInfo = [
   // {image : ``, title : ``, description : ``, likes : ``},
 ];
 export default function Login({ navigation }) {
-  const [cardsList, setCardsList] = useState(cardsInfo);
+  const [cardsList, setCardsList] = useState([]);
 
   var navigate = () => {
     navigation.push("Info");
@@ -94,7 +94,7 @@ export default function Login({ navigation }) {
     <ScrollView>
       <SafeAreaView>
         <Search />
-        {cardsList}
+        {cardsList && cardsList}
       </SafeAreaView>
     </ScrollView>
   );
