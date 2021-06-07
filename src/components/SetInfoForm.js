@@ -10,12 +10,15 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import colors from "../utils/colors";
 import * as ImagePicker from "expo-image-picker";
-import "firebase/storage";
+import Geocoder from "react-native-geocoding";
 import firebase from "../utils/firebase";
+
+const db = firebase.firestore();
 const SetInfoForm = ({ navigator }) => {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
+  const [formData, setFormData] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -37,8 +40,6 @@ const SetInfoForm = ({ navigator }) => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       setImage(result.uri);
     }
@@ -46,27 +47,50 @@ const SetInfoForm = ({ navigator }) => {
 
   const uploadImage = async () => {
     const uri = image;
-    const filename = uri.substring(uri.lastIndexOf("/") + 1);
-    const uploadUri = Platform.OS === "ios" ? uri.replace("file://", "") : uri;
-    setUploading(true);
-    setTransferred(0);
-    const task = storage().ref(filename).putFile(uploadUri);
-    // set progress state
-    task.on("state_changed", (snapshot) => {
-      setTransferred(
-        Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
-      );
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
     });
-    try {
-      await task;
-    } catch (e) {
-      console.error(e);
-    }
-    setUploading(false);
-    Alert.alert(
-      "Photo uploaded!",
-      "Your photo has been uploaded to Firebase Cloud Storage!"
-    );
+
+    const ref = firebase.storage().ref().child("prueba");
+    const snapshot = await ref.put(blob);
+    blob.close();
+
+    return await snapshot.ref.getDownloadURL();
+  };
+
+  const getLocation = async () => {};
+
+  const uploadInfo = async () => {
+    const imageUrl = await uploadImage();
+    var locationObj = [];
+    Geocoder.init("AIzaSyB4yf6tElNh8nKz9C2AXcigAZPa_lbur-U");
+    Geocoder.from(formData.location)
+      .then((json) => {
+        locationObj = json.results[0].geometry.location;
+
+        const obj = {
+          description: formData.description,
+          image: imageUrl,
+          likes: 0,
+          location: locationObj,
+          phoneNumber: "",
+          title: formData.title,
+          userId: "231jkh123b123",
+        };
+      })
+      .catch((error) => console.warn(error));
+
+    console.log(obj);
   };
 
   return (
@@ -97,17 +121,35 @@ const SetInfoForm = ({ navigator }) => {
         <View>
           <Text style={styles.textStyle}>Name</Text>
         </View>
-        <TextInput placeholder="Email" style={styles.input} />
+        <TextInput
+          placeholder="Name"
+          style={styles.input}
+          onChange={(e) =>
+            setFormData({ ...formData, title: e.nativeEvent.text })
+          }
+        />
         <View>
           <Text style={styles.textStyle}>Description</Text>
         </View>
-        <TextInput placeholder="Description" style={[styles.input]} />
+        <TextInput
+          placeholder="Description"
+          style={[styles.input]}
+          onChange={(e) =>
+            setFormData({ ...formData, description: e.nativeEvent.text })
+          }
+        />
         <View>
           <Text style={styles.textStyle}>Location</Text>
         </View>
-        <TextInput placeholder="Location" style={[styles.input]} />
+        <TextInput
+          placeholder="Location"
+          style={[styles.input]}
+          onChange={(e) =>
+            setFormData({ ...formData, location: e.nativeEvent.text })
+          }
+        />
       </View>
-      <TouchableOpacity style={styles.button} onPress={uploadImage}>
+      <TouchableOpacity style={styles.button} onPress={getLocation}>
         <Text style={styles.buttonText}>Añadir Cambios</Text>
       </TouchableOpacity>
     </>
@@ -146,5 +188,18 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 });
+
+function defaultValue() {
+  return {
+    description: null,
+    image: null,
+    likes: null,
+    score: null,
+    location: null,
+    phoneNumber: null,
+    title: null,
+    userId: null,
+  };
+}
 
 export default SetInfoForm;

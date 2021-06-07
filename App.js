@@ -11,12 +11,18 @@ import firebase from "./src/utils/firebase";
 import "firebase/firestore";
 import "firebase/auth/";
 import "firebase/storage";
+
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="SetInfo"
+          component={SetInfo}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="List"
           component={List}
@@ -27,12 +33,6 @@ export default function App() {
           component={Login}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="SetInfo"
-          component={SetInfo}
-          options={{ headerShown: false }}
-        />
-
         <Stack.Screen
           name="SignUp"
           component={SignUp}
