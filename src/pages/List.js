@@ -60,17 +60,12 @@ const cardsInfo = [
 export default function Login({ navigation }) {
   const [cardsList, setCardsList] = useState([]);
 
-  var navigate = () => {
-    navigation.push("Info");
-  };
-
   const getItems = async () => {
     var _cardsList = [];
     var snapshot = firebase.firestore().collection("locales");
     const data = (await snapshot.get()).docChanges();
     data.map((item, key) => {
       let aux = item.doc.data();
-
       _cardsList.push(
         <Card
           key={key}
@@ -78,7 +73,8 @@ export default function Login({ navigation }) {
           title={aux.title}
           description={aux.description}
           likes={aux.likes}
-          navigator={navigate}
+          navigator={navigation}
+          data={aux}
         />
       );
     });

@@ -7,7 +7,6 @@ import SignUp from "./src/pages/SignUp.js";
 import List from "./src/pages/List.js";
 import Info from "./src/pages/Info.js";
 import SetInfo from "./src/pages/SetInfo.js";
-import firebase from "./src/utils/firebase";
 import "firebase/firestore";
 import "firebase/auth/";
 import "firebase/storage";
@@ -19,15 +18,16 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="SetInfo"
-          component={SetInfo}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
           name="List"
           component={List}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="SetInfo"
+          component={SetInfo}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen
           name="Login"
           component={Login}

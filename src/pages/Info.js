@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native";
 
 import BigCard from "../components/BigCard.js";
 import MapCard from "../components/MapCard.js";
 
-export default function Info() {
+export default function Info({ route }) {
+  const { description, image, likes, location, phoneNumber, title } =
+    route.params;
   return (
     <SafeAreaView>
       <BigCard
-        image={`https://shortie-img.s3.us-east-2.amazonaws.com/a.png`}
-        title={`Abby's`}
-        description={`Tienda de Novedades y Regalos Abby's`}
-        likes={312}
-        phone={"4296970977"}
+        image={image}
+        title={title}
+        description={description}
+        likes={likes}
+        phone={phoneNumber}
       />
-      <MapCard location={"Calle Ignacio Allende 216"} />
+      <MapCard location={"Calle Ignacio Allende 216"} coordinates={location} />
     </SafeAreaView>
   );
 }

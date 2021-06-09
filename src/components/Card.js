@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,9 +10,15 @@ import {
 import { Divider } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const Card = ({ image, title, description, likes, navigator }) => {
+const Card = ({ image, title, description, likes, navigator, data }) => {
+  useEffect(() => {});
+
+  const navigate = () => {
+    navigator.navigate("Info", data);
+  };
+
   return (
-    <TouchableOpacity onPress={navigator}>
+    <TouchableOpacity onPress={navigate}>
       <View style={styles.card}>
         <View style={styles.cardRow}>
           <Image source={{ uri: image }} style={styles.image} />

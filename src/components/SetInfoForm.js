@@ -12,6 +12,8 @@ import colors from "../utils/colors";
 import * as ImagePicker from "expo-image-picker";
 import Geocoder from "react-native-geocoding";
 import firebase from "../utils/firebase";
+import uuid from "react-native-uuid";
+import "firebase/firestore";
 
 const db = firebase.firestore();
 const SetInfoForm = ({ navigator }) => {
@@ -61,24 +63,22 @@ const SetInfoForm = ({ navigator }) => {
       xhr.send(null);
     });
 
-    const ref = firebase.storage().ref().child("prueba");
+    const ref = firebase.storage().ref().child(uuid.v4());
     const snapshot = await ref.put(blob);
     blob.close();
 
     return await snapshot.ref.getDownloadURL();
   };
 
-  const getLocation = async () => {};
-
   const uploadInfo = async () => {
     const imageUrl = await uploadImage();
     var locationObj = [];
+    var obj;
     Geocoder.init("AIzaSyB4yf6tElNh8nKz9C2AXcigAZPa_lbur-U");
     Geocoder.from(formData.location)
       .then((json) => {
         locationObj = json.results[0].geometry.location;
-
-        const obj = {
+        obj = {
           description: formData.description,
           image: imageUrl,
           likes: 0,
@@ -87,10 +87,16 @@ const SetInfoForm = ({ navigator }) => {
           title: formData.title,
           userId: "231jkh123b123",
         };
+        db.collection("locales")
+          .add(obj)
+          .then((res) => {
+            navigator();
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       })
       .catch((error) => console.warn(error));
-
-    console.log(obj);
   };
 
   return (
@@ -149,7 +155,7 @@ const SetInfoForm = ({ navigator }) => {
           }
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={getLocation}>
+      <TouchableOpacity style={styles.button} onPress={uploadInfo}>
         <Text style={styles.buttonText}>Añadir Cambios</Text>
       </TouchableOpacity>
     </>
