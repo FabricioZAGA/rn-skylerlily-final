@@ -82,8 +82,9 @@ const SetInfoForm = ({ navigator }) => {
           description: formData.description,
           image: imageUrl,
           likes: 0,
+          textLocation: formData.location,
           location: locationObj,
-          phoneNumber: "",
+          phoneNumber: formData.phoneNumber,
           title: formData.title,
           userId: "231jkh123b123",
         };
@@ -152,6 +153,17 @@ const SetInfoForm = ({ navigator }) => {
           style={[styles.input]}
           onChange={(e) =>
             setFormData({ ...formData, location: e.nativeEvent.text })
+          }
+        />
+        <View>
+          <Text style={styles.textStyle}>Phone Number</Text>
+        </View>
+        <TextInput
+          keyboardType={"phone-pad"}
+          placeholder="Phone Number"
+          style={[styles.input]}
+          onChange={(e) =>
+            setFormData({ ...formData, phoneNumber: e.nativeEvent.text })
           }
         />
       </View>
