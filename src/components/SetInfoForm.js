@@ -74,14 +74,13 @@ const SetInfoForm = ({ navigator }) => {
     const imageUrl = await uploadImage();
     var locationObj = [];
     var obj;
-    Geocoder.init("AIzaSyB4yf6tElNh8nKz9C2AXcigAZPa_lbur-U");
+    Geocoder.init("AIzaSyAeJ8YMoqdmmbO9Jm8zr4RIeHdwarusckM");
     Geocoder.from(formData.location)
       .then((json) => {
         locationObj = json.results[0].geometry.location;
         obj = {
           description: formData.description,
           image: imageUrl,
-          likes: 0,
           textLocation: formData.location,
           location: locationObj,
           phoneNumber: formData.phoneNumber,

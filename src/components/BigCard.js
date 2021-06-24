@@ -22,14 +22,14 @@ const BigCard = ({ image, title, description, likes, phone }) => {
             <Text style={styles.title} ellipsizeMode="tail" numberOfLines={2}>
               {title}
             </Text>
-            <View style={styles.likesView}>
+            {/* <View style={styles.likesView}>
               <TouchableOpacity>
                 <View style={styles.likesViewInner}>
                   <MaterialIcons name="favorite-border" size={30} color="red" />
                   <Text style={styles.likesText}>{likes}</Text>
                 </View>
               </TouchableOpacity>
-            </View>
+            </View> */}
             <Text
               style={styles.description}
               numberOfLines={2}

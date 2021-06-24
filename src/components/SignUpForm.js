@@ -33,7 +33,7 @@ export default function SignUpForm({ navigation }) {
         .then(() => {
           console.log("cuenta creada");
           //navigation.push("SetInfo");
-          navigation.push("Login");
+          navigation.push("SetInfo");
         })
         .catch(() => {
           setFormError({

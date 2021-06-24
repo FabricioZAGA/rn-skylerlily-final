@@ -18,9 +18,6 @@ export default function Search() {
           source={require("../assets/akitamoslogo.png")}
         />
         <TextInput style={styles.searchInput} />
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Search</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );

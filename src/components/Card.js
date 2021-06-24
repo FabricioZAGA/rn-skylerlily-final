@@ -34,14 +34,14 @@ const Card = ({ image, title, description, likes, navigator, data }) => {
             >
               {description}
             </Text>
-            <View style={styles.likesView}>
+            {/* <View style={styles.likesView}>
               <TouchableOpacity>
                 <View style={styles.likesViewInner}>
                   <MaterialIcons name="favorite-border" size={30} color="red" />
                   <Text style={styles.likesText}>{likes}</Text>
                 </View>
               </TouchableOpacity>
-            </View>
+            </View> */}
           </View>
         </View>
       </View>

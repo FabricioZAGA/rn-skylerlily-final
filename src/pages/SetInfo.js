@@ -5,7 +5,7 @@ import SetInfoForm from "../components/SetInfoForm.js";
 
 export default function SetInfo({ navigation }) {
   var navigate = () => {
-    navigation.push("List");
+    navigation.push("Login");
   };
   return (
     <>
